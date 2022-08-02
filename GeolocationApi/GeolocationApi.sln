@@ -3,9 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8F5CCE15-D3BD-4E32-9923-CCEB70FCD257}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{020D0633-0AAB-4C0F-9127-4A86D734C0C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationApi.Application", "GeolocationApi.Application\GeolocationApi.Application.csproj", "{7B2099A6-2695-4986-B2C5-6DDDE66678CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationApi.Application.Tests", "GeolocationApi.Application.Tests\GeolocationApi.Application.Tests.csproj", "{802DAABF-5F89-4DCA-B25B-D32BB0CC8620}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B2099A6-2695-4986-B2C5-6DDDE66678CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2099A6-2695-4986-B2C5-6DDDE66678CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2099A6-2695-4986-B2C5-6DDDE66678CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2099A6-2695-4986-B2C5-6DDDE66678CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B2099A6-2695-4986-B2C5-6DDDE66678CD} = {8F5CCE15-D3BD-4E32-9923-CCEB70FCD257}
+		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620} = {020D0633-0AAB-4C0F-9127-4A86D734C0C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {220DC874-5ACB-4B14-BC73-75471B2A147D}
