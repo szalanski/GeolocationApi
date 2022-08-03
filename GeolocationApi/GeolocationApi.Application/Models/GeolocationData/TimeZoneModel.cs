@@ -1,6 +1,6 @@
-﻿namespace GeolocationApi.Application.Dtos.GeolocationData
+﻿namespace GeolocationApi.Application.Models.GeolocationData
 {
-    public record TimeZoneDto
+    public record TimeZoneModel
     {
         public string id { get; set; }
         public DateTime current_time { get; set; }

@@ -1,5 +1,5 @@
 ﻿using GeolocationApi.Application.Contracts;
-using GeolocationApi.Application.Dtos.GeolocationData;
+using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Responses;
 
 namespace GeolocationApi.Application.Services
@@ -22,7 +22,7 @@ namespace GeolocationApi.Application.Services
 
             if(response.IsSuccessStatusCode)
             {
-                var content =  await response.Content.ReadAsAsync<GeolocationDto>();
+                var content =  await response.Content.ReadAsAsync<GeolocationModel>();
                 return new GeolocationServiceResponse(content, response.StatusCode);
             }
 

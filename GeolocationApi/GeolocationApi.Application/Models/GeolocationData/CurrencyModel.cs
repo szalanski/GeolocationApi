@@ -1,6 +1,6 @@
-﻿namespace GeolocationApi.Application.Dtos.GeolocationData
+﻿namespace GeolocationApi.Application.Models.GeolocationData
 {
-    public record CurrencyDto
+    public record CurrencyModel
     {
         public string code { get; set; }
         public string name { get; set; }

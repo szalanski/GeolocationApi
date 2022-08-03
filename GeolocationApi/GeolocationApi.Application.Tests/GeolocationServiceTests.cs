@@ -1,5 +1,5 @@
 ﻿using GeolocationApi.Application.Contracts;
-using GeolocationApi.Application.Dtos.GeolocationData;
+using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Services;
 using Newtonsoft.Json;
 using System.Net;
@@ -62,7 +62,7 @@ namespace GeolocationApi.Application.Tests
         public async Task GetAsync_ShouldReturnGeolocationDto_WhenValidIpAddressIsGiven()
         {
             //Arrange
-            var expectedContent = JsonConvert.DeserializeObject<GeolocationDto>(TestJson);
+            var expectedContent = JsonConvert.DeserializeObject<GeolocationModel>(TestJson);
             var ipAddress = "8.8.8.8";
 
             var expectedResponse = new HttpResponseMessage()
@@ -86,7 +86,7 @@ namespace GeolocationApi.Application.Tests
         public async Task GetAsync_ShouldReturnGeolocationDto_WhenValidUrlAddressIsGiven()
         {
             //arrange
-            var expectedContent = JsonConvert.DeserializeObject<GeolocationDto>(TestJson);
+            var expectedContent = JsonConvert.DeserializeObject<GeolocationModel>(TestJson);
             var url = "www.google.com";
 
             var expectedResponse = new HttpResponseMessage()

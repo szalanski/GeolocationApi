@@ -1,12 +1,12 @@
 ﻿using GeolocationApi.Application.Common;
 
-namespace GeolocationApi.Application.Dtos.GeolocationData
+namespace GeolocationApi.Application.Models.GeolocationData
 {
-    public record LocationDto
+    public record LocationModel
     {
-        public int? geoname_id { get; set; }
+        public int geoname_id { get; set; }
         public string capital { get; set; }
-        public ValueEqualityList<LanguageDto> languages { get; set; }
+        public ValueEqualityList<LanguageModel> languages { get; set; }
         public string country_flag { get; set; }
         public string country_flag_emoji { get; set; }
         public string country_flag_emoji_unicode { get; set; }

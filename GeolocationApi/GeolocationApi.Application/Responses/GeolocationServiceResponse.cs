@@ -1,7 +1,7 @@
-﻿using GeolocationApi.Application.Dtos.GeolocationData;
+﻿using GeolocationApi.Application.Models.GeolocationData;
 using System.Net;
 
 namespace GeolocationApi.Application.Responses
 {
-    public record GeolocationServiceResponse(GeolocationDto Content, HttpStatusCode StatusCode);
+    public record GeolocationServiceResponse(GeolocationModel Content, HttpStatusCode StatusCode);
 }

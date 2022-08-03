@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeolocationApi.Application.Dtos.GeolocationData
+namespace GeolocationApi.Application.Models.GeolocationData
 {
 
-    public record GeolocationDto
+    public record GeolocationModel
     {
         public string ip { get; set; }
         public string type { get; set; }
@@ -21,10 +21,10 @@ namespace GeolocationApi.Application.Dtos.GeolocationData
         public string zip { get; set; }
         public float latitude { get; set; }
         public float longitude { get; set; }
-        public LocationDto location { get; set; }
-        public TimeZoneDto time_zone { get; set; }
-        public CurrencyDto currency { get; set; }
-        public ConnectionDto connection { get; set; }
+        public LocationModel location { get; set; }
+        public TimeZoneModel time_zone { get; set; }
+        public CurrencyModel currency { get; set; }
+        public ConnectionModel connection { get; set; }
     }
 
 }
