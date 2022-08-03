@@ -1,9 +1,9 @@
-﻿using GeolocationApi.Application.Dtos.GeolocationData;
+﻿using GeolocationApi.Application.Responses;
 
 namespace GeolocationApi.Application.Contracts
 {
-    public interface IGeolocationService
+    public interface IGeolocationService : IDisposable
     {
-        Task<GeolocationDto> GetAsync(string url);
+        Task<GeolocationServiceResponse> GetAsync(string url);
     }
 }
