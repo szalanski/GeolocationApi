@@ -7,12 +7,12 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace GeolocationApi.Application.Tests
+namespace GeolocationApi.Application.Tests.Services
 {
     [TestClass]
     public class GeolocationServiceTests
     {
-        
+
 
         private const string ApiKey = "";
         private const string TestJson = @"{
@@ -56,7 +56,7 @@ namespace GeolocationApi.Application.Tests
 
             var expectedResponse = new HttpResponseMessage()
             {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Content = new StringContent(TestJson, Encoding.UTF8, "application/json")
             };
 
