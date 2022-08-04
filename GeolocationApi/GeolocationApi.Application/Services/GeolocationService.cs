@@ -1,6 +1,7 @@
 ﻿using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Responses;
+using Newtonsoft.Json;
 
 namespace GeolocationApi.Application.Services
 {
@@ -22,14 +23,15 @@ namespace GeolocationApi.Application.Services
             var url = $"http://api.ipstack.com/{address}?access_key={_apiKey}";
             using var response = await _client.GetAsync(url, cancelaltionToken);
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                var content =  await response.Content.ReadAsAsync<GeolocationModel>(cancelaltionToken);
-                if(content != null)
-                    return new GeolocationServiceResponse(content, response.StatusCode);
+                var json = await response.Content.ReadAsStringAsync(cancelaltionToken);
+                var error = JsonConvert.DeserializeObject<ErrorResponse>(json);
+                if (error.Success.HasValue)
+                    return new GeolocationServiceResponse(null, response.StatusCode, false, error.Error.Info);
 
-                var error = await response.Content.ReadAsAsync<ErrorResponse>(cancelaltionToken);
-                return new GeolocationServiceResponse(content, response.StatusCode, false, error.Error.Info);
+                var content = JsonConvert.DeserializeObject<GeolocationModel>(json);
+                return new GeolocationServiceResponse(content, response.StatusCode);
             }
 
             return new GeolocationServiceResponse(null, response.StatusCode, false);

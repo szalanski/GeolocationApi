@@ -8,7 +8,7 @@ namespace GeolocationApi.Application.Models.GeolocationData
 {
     public record ErrorResponse
     {
-        public bool Success { get; set; }
+        public bool? Success { get; set; }
         public ErrorModel Error { get; set; }
     }
 

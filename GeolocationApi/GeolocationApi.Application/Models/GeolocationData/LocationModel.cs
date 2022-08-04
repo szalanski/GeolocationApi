@@ -4,7 +4,7 @@ namespace GeolocationApi.Application.Models.GeolocationData
 {
     public record LocationModel
     {
-        public int geoname_id { get; set; }
+        public int? geoname_id { get; set; }
         public string capital { get; set; }
         public ValueEqualityList<LanguageModel> languages { get; set; }
         public string country_flag { get; set; }

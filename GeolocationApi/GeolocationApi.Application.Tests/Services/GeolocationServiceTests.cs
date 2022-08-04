@@ -91,8 +91,7 @@ namespace GeolocationApi.Application.Tests.Services
             //Assert
             Assert.AreEqual(expectedContent, response.content);
             Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
-            Assert.IsFalse(response.succeeded);
-            Assert.AreEqual("", response.message);
+
         }
 
         [TestMethod]
