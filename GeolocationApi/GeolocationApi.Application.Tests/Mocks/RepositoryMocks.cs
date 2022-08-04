@@ -1,11 +1,6 @@
 ﻿using ColocationApi.Domain.Entities;
 using GeolocationApi.Application.Contracts.Persistence;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeolocationApi.Application.Tests.Mock
 {
