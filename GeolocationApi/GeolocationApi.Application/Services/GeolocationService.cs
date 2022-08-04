@@ -15,18 +15,24 @@ namespace GeolocationApi.Application.Services
             _apiKey = apiKey;
         }
 
-        public async Task<GeolocationServiceResponse> GetAsync(string address)
+        public async Task<GeolocationServiceResponse> GetAsync(string address, CancellationToken cancelaltionToken)
         {
+            cancelaltionToken.ThrowIfCancellationRequested();
+
             var url = $"http://api.ipstack.com/{address}?access_key={_apiKey}";
-            using var response = await _client.GetAsync(url);
+            using var response = await _client.GetAsync(url, cancelaltionToken);
 
             if(response.IsSuccessStatusCode)
             {
-                var content =  await response.Content.ReadAsAsync<GeolocationModel>();
-                return new GeolocationServiceResponse(content, response.StatusCode);
+                var content =  await response.Content.ReadAsAsync<GeolocationModel>(cancelaltionToken);
+                if(content != null)
+                    return new GeolocationServiceResponse(content, response.StatusCode);
+
+                var error = await response.Content.ReadAsAsync<ErrorResponse>(cancelaltionToken);
+                return new GeolocationServiceResponse(content, response.StatusCode, false, error.Error.Info);
             }
 
-            return new GeolocationServiceResponse(null, response.StatusCode);
+            return new GeolocationServiceResponse(null, response.StatusCode, false);
         }
 
 
