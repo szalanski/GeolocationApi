@@ -1,6 +1,7 @@
 ﻿using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Services;
+using GeolocationApi.Application.Tests.Mock;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
@@ -11,19 +12,7 @@ namespace GeolocationApi.Application.Tests
     [TestClass]
     public class GeolocationServiceTests
     {
-        public class HttpMessageHandlerMock : HttpMessageHandler
-        {
-            private readonly HttpResponseMessage _response;
-
-            public HttpMessageHandlerMock(HttpResponseMessage respone)
-            {
-                _response = respone;
-            }
-            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                return Task.FromResult(_response);
-            }
-        }
+        
 
         private const string ApiKey = "";
         private const string TestJson = @"{

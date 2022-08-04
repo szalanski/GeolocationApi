@@ -18,8 +18,8 @@ namespace ColocationApi.Domain.Entities
         public string RegionName { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public Location Location { get; set; }
         public int LocationId { get; set; }
         public TimeZoneEntity TimeZone { get; set; }

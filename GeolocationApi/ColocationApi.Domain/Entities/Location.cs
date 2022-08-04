@@ -2,7 +2,8 @@
 {
     public class Location
     {
-        public int GeonameId { get; set; }
+        public int Id { get; set; }
+        public int? GeonameId { get; set; }
         public string Capital { get; set; }
         public ICollection<Language> Languages { get; set; }
         public string CountryFlag { get; set; }
