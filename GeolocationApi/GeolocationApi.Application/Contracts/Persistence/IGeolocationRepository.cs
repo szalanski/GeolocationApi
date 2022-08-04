@@ -6,6 +6,8 @@ namespace GeolocationApi.Application.Contracts.Persistence
     {
         Task<Geolocation> GetByIpAsync(string ip);
 
+        Task<Geolocation> GetByUrlAsync(string url);
+
         Task<IReadOnlyList<Geolocation>> GetAllAsync();
 
         Task<Geolocation> AddAsync(Geolocation entity);
