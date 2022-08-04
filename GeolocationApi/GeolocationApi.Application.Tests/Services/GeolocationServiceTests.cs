@@ -63,11 +63,11 @@ namespace GeolocationApi.Application.Tests.Services
             using var service = CreateServiceUnderTest(expectedResponse);
 
             //Act
-            var response = await service.GetAsync(ipAddress);
+            var response = await service.GetAsync(ipAddress, CancellationToken.None);
 
             //Assert
-            Assert.AreEqual(expectedContent, response.Content);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(expectedContent, response.content);
+            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
         }
 
 
@@ -86,15 +86,17 @@ namespace GeolocationApi.Application.Tests.Services
             using var service = CreateServiceUnderTest(expectedResponse);
 
             //Act
-            var response = await service.GetAsync(url);
+            var response = await service.GetAsync(url, CancellationToken.None);
 
             //Assert
-            Assert.AreEqual(expectedContent, response.Content);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(expectedContent, response.content);
+            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
+            Assert.IsFalse(response.succeeded);
+            Assert.AreEqual("", response.message);
         }
 
         [TestMethod]
-        public async Task GetAsync_ShouldThrowException_WhenBadRequestStatusIsReturned()
+        public async Task GetAsync_ShouldReturnBadRequestAndSucceesFalse_WhenApiReturnsBadRequest()
         {
             //Arrange
             var ipAddress = "8.8.8.8";
@@ -106,12 +108,51 @@ namespace GeolocationApi.Application.Tests.Services
             using var service = CreateServiceUnderTest(expectedResponse);
 
             //Act
-            var response = await service.GetAsync(ipAddress);
+            var response = await service.GetAsync(ipAddress, CancellationToken.None);
 
             //Assert
-            Assert.IsNull(response.Content);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.IsNull(response.content);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.statusCode);
+            Assert.IsFalse(response.succeeded);
+            Assert.AreEqual("", response.message);
         }
+
+        [TestMethod]
+        public async Task GetAsync_ShdouldReturnSucceddedFalse_WhenApiRespondsWithErrorMessage()
+        {
+            //Arrange
+            string ipAddress = "";
+
+            var error = new
+            {
+                success = false,
+                error = new
+                {
+                    code = 106,
+                    type = "invalid_ip_address",
+                    info = "The IP Address supplied is invalid."
+                }
+            };
+
+            var json = JsonConvert.SerializeObject(error);
+
+            var expectedResponse = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            using var service = CreateServiceUnderTest(expectedResponse);
+            //Act
+            var response = await service.GetAsync(ipAddress, CancellationToken.None);
+
+            //Assert
+            Assert.IsNull(response.content);
+            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
+            Assert.IsFalse(response.succeeded);
+            Assert.AreEqual("The IP Address supplied is invalid.", response.message);
+        }
+
 
         private IGeolocationService CreateServiceUnderTest(HttpResponseMessage response)
         {
