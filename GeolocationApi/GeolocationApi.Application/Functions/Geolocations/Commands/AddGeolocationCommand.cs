@@ -1,48 +1,40 @@
-﻿using GeolocationApi.Application.Contracts;
+﻿using AutoMapper;
+using ColocationApi.Domain.Entities;
+using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Contracts.Persistence;
 using GeolocationApi.Application.Dtos;
-using GeolocationApi.Application.Responses;
+using LanguageExt.Common;
 using MediatR;
-using System.Net;
 
 namespace GeolocationApi.Application.Functions.Geolocations.Commands
 {
-    public record AddGeolocationCommandResponse : BaseResponse<GeolocationDto>
-    {
-        public AddGeolocationCommandResponse(bool succeeded = true, string message = "", GeolocationDto data = null, List<string> validationErrors = null)
-            : base(succeeded, message, data, validationErrors)
-        {
+    public record struct AddGeolocationCommand(string Url) : IRequest<Result<GeolocationDto>>;
 
-        }
-        public string Ip { get; set; }
-    }
-
-    public record AddGeolocationCommand(string Url): IRequest<AddGeolocationCommandResponse>;
-    
-
-    public class AddGeolocationCommandHandler : IRequestHandler<AddGeolocationCommand, AddGeolocationCommandResponse>
+    public class AddGeolocationCommandHandler : IRequestHandler<AddGeolocationCommand, Result<GeolocationDto>>
     {
         private readonly IGeolocationRepository _repository;
         private readonly IGeolocationService _geolocationService;
+        private readonly IMapper _mapper;
 
-        public AddGeolocationCommandHandler(IGeolocationRepository repository, IGeolocationService geolocationService)
+        public AddGeolocationCommandHandler(IGeolocationRepository repository, IGeolocationService geolocationService, IMapper mapper)
         {
             _repository = repository;
             _geolocationService = geolocationService;
+            _mapper = mapper;
         }
 
-        public async Task<AddGeolocationCommandResponse> Handle(AddGeolocationCommand request, CancellationToken cancellationToken)
+        public async Task<Result<GeolocationDto>> Handle(AddGeolocationCommand request, CancellationToken cancellationToken)
         {
-            //var apiResponse = await _geolocationService.GetAsync(request.Url, cancellationToken);
-            //if (apiResponse.succeeded)
-            //{
+            var apiRequestResult = await _geolocationService.GetAsync(request.Url, cancellationToken);
 
-            //    return new AddGeolocationCommandResponse(true);
-            //}
-
-
-            //return new AddGeolocationCommandResponse(false, apiResponse.message, null);
-            return null;
+            return await apiRequestResult.Match<Task<Result<GeolocationDto>>>(async result =>
+            {
+                var newLocation = _mapper.Map<Geolocation>(result);
+                var entity = await _repository.AddAsync(newLocation);
+                var dto = _mapper.Map<GeolocationDto>(entity);
+                return new Result<GeolocationDto>(dto);
+            },
+            error => Task.FromResult(new Result<GeolocationDto>(error)));
         }
     }
 }
