@@ -11,23 +11,23 @@ namespace GeolocationApi.Application.Tests.Mock
             var locations = GetLocations();
             var mock = new Mock<IGeolocationRepository>();
 
-            mock.Setup(reopo => reopo.GetAllAsync()).ReturnsAsync(locations);
+            mock.Setup(reopo => reopo.GetAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(locations);
 
-            mock.Setup(repo => repo.GetByIpAsync(It.IsAny<string>())).
+            mock.Setup(repo => repo.GetByIpAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).
                 ReturnsAsync((string ip) => locations.FirstOrDefault(g => g.Ip == ip));
 
 
-            mock.Setup(repo => repo.GetByUrlAsync(It.IsAny<string>())).
+            mock.Setup(repo => repo.GetByUrlAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).
                 ReturnsAsync((string url) => locations.FirstOrDefault(g => g.Url == url));
 
-            mock.Setup(repo => repo.AddAsync(It.IsAny<Geolocation>()))
+            mock.Setup(repo => repo.AddAsync(It.IsAny<Geolocation>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Geolocation location) =>
                 {
                     locations.Add(location);
                     return location;
                 });
 
-            mock.Setup(repo => repo.DeleteAsync(It.IsAny<Geolocation>()))
+            mock.Setup(repo => repo.DeleteAsync(It.IsAny<Geolocation>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Geolocation location) =>
                 {
                     locations.Remove(location);
@@ -55,7 +55,6 @@ namespace GeolocationApi.Application.Tests.Mock
                 Latitude = 40.5369987487793,
                 Longitude = -82.12859344482422,
             };
-
 
             return new List<Geolocation>() { location1 };
         }

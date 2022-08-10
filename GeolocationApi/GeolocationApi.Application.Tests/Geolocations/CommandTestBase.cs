@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GeolocationApi.Application.Tests.Geolocations.Commands
 {
-    public abstract partial class CommandTestBase
+    public abstract class CommandQueryTestBase
     {
         protected const string TestJson = @"{
                                             ""ip"": ""185.21.87.139"",
@@ -46,12 +46,14 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
         protected readonly Mock<IGeolocationRepository> _repository;
         protected readonly IMapper _mapper;
 
-        public CommandTestBase()
+        public CommandQueryTestBase()
         {
             _repository = RepositoryMocks.GetGeolocationRepository();
 
             var cfgProvider = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             _mapper = cfgProvider.CreateMapper();
         }
+
+       
     }
 }

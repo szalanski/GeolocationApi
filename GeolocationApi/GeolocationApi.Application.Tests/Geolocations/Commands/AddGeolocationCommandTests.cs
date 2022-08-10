@@ -9,7 +9,7 @@ using System.Text;
 namespace GeolocationApi.Application.Tests.Geolocations.Commands
 {
     [TestClass]
-    public class AddGeolocationCommandTests : CommandTestBase
+    public class AddGeolocationCommandTests : CommandQueryTestBase
     {
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var geolocationService = CreateGeolocationService(expectedResponse);
 
             var repository = _repository.Object;
-            var initialCount = repository.GetAllAsync().GetAwaiter().GetResult().Count;
+            var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
             var handler = new AddGeolocationCommandHandler(repository, geolocationService, _mapper);
 
             //Act
@@ -52,8 +52,8 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
 
             //Assert
             Assert.IsTrue(response.IsSuccess);
-            var finalCount = repository.GetAllAsync().GetAwaiter().GetResult().Count;
-            var addedItem = await repository.GetByIpAsync(ipAddress);
+            var finalCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
+            var addedItem = await repository.GetByIpAsync(ipAddress, CancellationToken.None);
 
             Assert.AreEqual(expectedItem, _mapper.Map<GeolocationDto>(addedItem));
             Assert.AreEqual(initialCount + 1, finalCount);
@@ -76,7 +76,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var geolocationService = CreateGeolocationService(expectedResponse);
 
             var repository = _repository.Object;
-            var initialCount = repository.GetAllAsync().GetAwaiter().GetResult().Count;
+            var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
             var handler = new AddGeolocationCommandHandler(repository, geolocationService, _mapper);
 
             //Act
@@ -85,7 +85,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
 
             //Assert
             Assert.IsTrue(response.IsFaulted);
-            var finalCount = repository.GetAllAsync().GetAwaiter().GetResult().Count;
+            var finalCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
 
             Assert.AreEqual(initialCount, finalCount);
             response.IfSucc(response => Assert.Fail());
