@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ColocationApi.Domain.Entities
+﻿namespace ColocationApi.Domain.Entities
 {
     public class Geolocation
     {
@@ -21,13 +15,6 @@ namespace ColocationApi.Domain.Entities
         public string Zip { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public Location Location { get; set; }
-        public int LocationId { get; set; }
-        public TimeZoneEntity TimeZone { get; set; }
-        public string TimeZoneId { get; set; }
-        public Currency Currency { get; set; }
-        public string CurrencyId { get; set; }
-        public int ConnectionAsn { get; set; }
-        public string ConnectionIsp { get; set; }
+   
     }
 }
