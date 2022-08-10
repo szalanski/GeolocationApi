@@ -1,12 +1,15 @@
 ﻿using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Responses;
+using LanguageExt.Common;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace GeolocationApi.Application.Services
 {
     public class GeolocationService : IGeolocationService
     {
+        private const int InvalidIpErrorCode = 106;
         private readonly HttpClient _client;
         private readonly string _apiKey;
 
@@ -16,7 +19,7 @@ namespace GeolocationApi.Application.Services
             _apiKey = apiKey;
         }
 
-        public async Task<GeolocationServiceResponse> GetAsync(string address, CancellationToken cancelaltionToken)
+        public async Task<Result<GeolocationModel>> GetAsync(string address, CancellationToken cancelaltionToken)
         {
             cancelaltionToken.ThrowIfCancellationRequested();
 
@@ -28,15 +31,25 @@ namespace GeolocationApi.Application.Services
                 var json = await response.Content.ReadAsStringAsync(cancelaltionToken);
                 var error = JsonConvert.DeserializeObject<ErrorResponse>(json);
                 if (error.Success.HasValue)
-                    return new GeolocationServiceResponse(null, response.StatusCode, false, error.Error.Info);
+                {
+                    return new Result<GeolocationModel>(HandleErrorResponse(error));
+                }
 
                 var content = JsonConvert.DeserializeObject<GeolocationModel>(json);
-                return new GeolocationServiceResponse(content, response.StatusCode);
+                return new Result<GeolocationModel>(content);
             }
 
-            return new GeolocationServiceResponse(null, response.StatusCode, false);
+            var exception = new HttpRequestException(response.ReasonPhrase, null, response.StatusCode);
+            return new Result<GeolocationModel>(exception);
         }
 
+        private Exception HandleErrorResponse(ErrorResponse response)
+        {
+            if (response.Error.Code == InvalidIpErrorCode)
+                return new HttpRequestException(response.Error.Info, null, System.Net.HttpStatusCode.BadRequest);
+
+            return new HttpRequestException(response.Error.Info, null, System.Net.HttpStatusCode.InternalServerError);
+        }
 
         public void Dispose()
         {

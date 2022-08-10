@@ -33,15 +33,16 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
 
         public async Task<AddGeolocationCommandResponse> Handle(AddGeolocationCommand request, CancellationToken cancellationToken)
         {
-            var apiResponse = await _geolocationService.GetAsync(request.Url, cancellationToken);
-            if (apiResponse.succeeded)
-            {
+            //var apiResponse = await _geolocationService.GetAsync(request.Url, cancellationToken);
+            //if (apiResponse.succeeded)
+            //{
 
-                return new AddGeolocationCommandResponse(true);
-            }
+            //    return new AddGeolocationCommandResponse(true);
+            //}
 
 
-            return new AddGeolocationCommandResponse(false, apiResponse.message, null);
+            //return new AddGeolocationCommandResponse(false, apiResponse.message, null);
+            return null;
         }
     }
 }

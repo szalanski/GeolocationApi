@@ -65,9 +65,10 @@ namespace GeolocationApi.Application.Tests.Services
             //Act
             var response = await service.GetAsync(ipAddress, CancellationToken.None);
 
+
             //Assert
-            Assert.AreEqual(expectedContent, response.content);
-            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
+            Assert.IsTrue(response.IsSuccess);
+            response.IfSucc(r => Assert.AreEqual(expectedContent, r));
         }
 
 
@@ -89,9 +90,8 @@ namespace GeolocationApi.Application.Tests.Services
             var response = await service.GetAsync(url, CancellationToken.None);
 
             //Assert
-            Assert.AreEqual(expectedContent, response.content);
-            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
-
+            Assert.IsTrue(response.IsSuccess);
+            response.IfSucc(r => Assert.AreEqual(expectedContent, r));
         }
 
         [TestMethod]
@@ -110,10 +110,12 @@ namespace GeolocationApi.Application.Tests.Services
             var response = await service.GetAsync(ipAddress, CancellationToken.None);
 
             //Assert
-            Assert.IsNull(response.content);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.statusCode);
-            Assert.IsFalse(response.succeeded);
-            Assert.AreEqual("", response.message);
+            Assert.IsTrue(response.IsFaulted);
+            response.IfFail(exception =>
+            {
+                Assert.IsInstanceOfType(exception, typeof(HttpRequestException));
+                Assert.IsTrue(((HttpRequestException)exception).StatusCode == HttpStatusCode.BadRequest);
+            });
         }
 
         [TestMethod]
@@ -146,10 +148,12 @@ namespace GeolocationApi.Application.Tests.Services
             var response = await service.GetAsync(ipAddress, CancellationToken.None);
 
             //Assert
-            Assert.IsNull(response.content);
-            Assert.AreEqual(HttpStatusCode.OK, response.statusCode);
-            Assert.IsFalse(response.succeeded);
-            Assert.AreEqual("The IP Address supplied is invalid.", response.message);
+            Assert.IsTrue(response.IsFaulted);
+            response.IfFail(exception =>
+            {
+                Assert.IsInstanceOfType(exception, typeof(HttpRequestException));
+                Assert.IsTrue(((HttpRequestException)exception).StatusCode == HttpStatusCode.BadRequest);
+            });
         }
 
 
