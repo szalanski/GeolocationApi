@@ -1,0 +1,49 @@
+﻿using AutoMapper;
+using ColocationApi.Domain.Entities;
+using GeolocationApi.Application.Contracts.Persistence;
+using LanguageExt.Common;
+using MediatR;
+using System.Net;
+
+namespace GeolocationApi.Application.Functions.Geolocations.Commands
+{
+    public record struct DeleteGeolocationCommand : IRequest<Result<string>>
+    {
+        public string Url { get; set; }
+        public string Ip { get; set; }
+    }
+
+    public class DeleteGeolocationCommandHandler : IRequestHandler<DeleteGeolocationCommand, Result<string>>
+    {
+        private readonly IMapper _mapper;
+        private readonly IGeolocationRepository _repository;
+
+        public DeleteGeolocationCommandHandler(IMapper mapper, IGeolocationRepository repository)
+        {
+            _mapper = mapper;
+            _repository = repository;
+        }
+
+        public async Task<Result<string>> Handle(DeleteGeolocationCommand request, CancellationToken cancellationToken)
+        {
+            var entity = await GetEntity(request);
+            if (entity == null) 
+                return new Result<string>(new HttpRequestException("Resource with provided IP address or Url cannot be found", null, HttpStatusCode.NotFound));
+
+            var result = await _repository.DeleteAsync(entity);
+            return new Result<string>(result.Ip);
+        }
+
+        private async Task<Geolocation> GetEntity(DeleteGeolocationCommand command)
+        {
+            if (!string.IsNullOrWhiteSpace(command.Ip))
+                return await _repository.GetByIpAsync(command.Ip);
+
+
+            if (!string.IsNullOrWhiteSpace(command.Url))
+                return await _repository.GetByUrlAsync(command.Url);
+
+            return null;
+        }
+    }
+}

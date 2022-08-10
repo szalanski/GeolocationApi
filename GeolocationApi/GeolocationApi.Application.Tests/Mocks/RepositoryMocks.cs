@@ -16,6 +16,10 @@ namespace GeolocationApi.Application.Tests.Mock
             mock.Setup(repo => repo.GetByIpAsync(It.IsAny<string>())).
                 ReturnsAsync((string ip) => locations.FirstOrDefault(g => g.Ip == ip));
 
+
+            mock.Setup(repo => repo.GetByUrlAsync(It.IsAny<string>())).
+                ReturnsAsync((string url) => locations.FirstOrDefault(g => g.Url == url));
+
             mock.Setup(repo => repo.AddAsync(It.IsAny<Geolocation>()))
                 .ReturnsAsync((Geolocation location) =>
                 {
@@ -38,6 +42,7 @@ namespace GeolocationApi.Application.Tests.Mock
             var location1 = new Geolocation()
             {
                 Ip = "8.8.8.8",
+                Url = "www.google.com",
                 Type = "ipv4",
                 ContinentCode = "NA",
                 ContinentName = "North America",
