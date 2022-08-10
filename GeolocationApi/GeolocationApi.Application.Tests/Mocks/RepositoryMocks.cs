@@ -60,20 +60,6 @@ namespace GeolocationApi.Application.Tests.Mock
                 Zip = "44628",
                 Latitude = 40.5369987487793,
                 Longitude = -82.12859344482422,
-                Location = new Location()
-                {
-                    GeonameId = null,
-                    Capital = "Washington D.C.",
-                    Languages = new List<Language>()
-                    {
-                        new Language() { Code = "en", Name = "English", Native = "English" }
-                    },
-                    CountryFlag = "https://assets.ipstack.com/flags/us.svg",
-                    CountryFlagEmoji = "us",
-                    CountryFlagEmojiUnicode = "U+1F1FA U+1F1F8",
-                    CallingCode = "1",
-                    IsEu = false
-                }
             };
 
 

@@ -1,5 +1,6 @@
 ﻿namespace GeolocationApi.Application.Tests.Mock
 {
+
     public class HttpMessageHandlerMock : HttpMessageHandler
     {
         private readonly HttpResponseMessage _response;

@@ -155,11 +155,7 @@ namespace GeolocationApi.Application.Tests.Services
 
         private IGeolocationService CreateServiceUnderTest(HttpResponseMessage response)
         {
-            var client = new HttpClient(new HttpMessageHandlerMock(response));
-
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+            var client = HttpClientMock.GetClient(response);
             return new GeolocationService(client, ApiKey);
         }
 

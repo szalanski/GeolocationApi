@@ -20,4 +20,9 @@
     <ProjectReference Include="..\GeolocationApi.Application\GeolocationApi.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Geolocations\Commands\" />
+    <Folder Include="Geolocations\Queries\" />
+  </ItemGroup>
+
 </Project>
