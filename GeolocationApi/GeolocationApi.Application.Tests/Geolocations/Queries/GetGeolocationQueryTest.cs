@@ -1,13 +1,13 @@
-﻿using ColocationApi.Domain.Entities;
-using GeolocationApi.Application.Dtos;
+﻿using GeolocationApi.Application.Dtos;
 using GeolocationApi.Application.Functions.Geolocations.Queries;
 using GeolocationApi.Application.Tests.Geolocations.Commands;
 using System.Net;
 
 namespace GeolocationApi.Application.Tests.Geolocations.Queries
 {
+
     [TestClass]
-    public  class GetGeolocationQueryTest : CommandQueryTestBase
+    public class GetGeolocationQueryTest : CommandQueryTestBase
     {
         [TestMethod]
 
@@ -19,7 +19,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Queries
             var repository = _repository.Object;
             var handler = new GetGeolocationQueryHandler(_mapper, repository);
 
-            var item = await repository.GetByIpAsync(ipAddress,CancellationToken.None);
+            var item = await repository.GetByIpAsync(ipAddress, CancellationToken.None);
             var expectedResponse = _mapper.Map<GeolocationDto>(item);
 
             //Act
