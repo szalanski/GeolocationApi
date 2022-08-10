@@ -30,7 +30,7 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
             return await apiRequestResult.Match<Task<Result<string>>>(async result =>
             {
                 var newLocation = _mapper.Map<Geolocation>(result);
-                var entity = await _repository.AddAsync(newLocation);
+                var entity = await _repository.AddAsync(newLocation, cancellationToken);
                 var dto = _mapper.Map<GeolocationDto>(entity);
                 return new Result<string>(dto.Ip);
             },

@@ -26,22 +26,22 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
 
         public async Task<Result<string>> Handle(DeleteGeolocationCommand request, CancellationToken cancellationToken)
         {
-            var entity = await GetEntity(request);
+            var entity = await GetEntity(request, cancellationToken);
             if (entity == null) 
                 return new Result<string>(new HttpRequestException("Resource with provided IP address or Url cannot be found", null, HttpStatusCode.NotFound));
 
-            var result = await _repository.DeleteAsync(entity);
+            var result = await _repository.DeleteAsync(entity, cancellationToken);
             return new Result<string>(result.Ip);
         }
 
-        private async Task<Geolocation> GetEntity(DeleteGeolocationCommand command)
+        private async Task<Geolocation> GetEntity(DeleteGeolocationCommand command, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(command.Ip))
-                return await _repository.GetByIpAsync(command.Ip);
+                return await _repository.GetByIpAsync(command.Ip, cancellationToken);
 
 
             if (!string.IsNullOrWhiteSpace(command.Url))
-                return await _repository.GetByUrlAsync(command.Url);
+                return await _repository.GetByUrlAsync(command.Url, cancellationToken);
 
             return null;
         }
