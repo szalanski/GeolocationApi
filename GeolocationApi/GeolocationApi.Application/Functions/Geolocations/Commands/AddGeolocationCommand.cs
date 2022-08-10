@@ -8,9 +8,9 @@ using MediatR;
 
 namespace GeolocationApi.Application.Functions.Geolocations.Commands
 {
-    public record struct AddGeolocationCommand(string Url) : IRequest<Result<GeolocationDto>>;
+    public record struct AddGeolocationCommand(string Url) : IRequest<Result<string>>;
 
-    public class AddGeolocationCommandHandler : IRequestHandler<AddGeolocationCommand, Result<GeolocationDto>>
+    public class AddGeolocationCommandHandler : IRequestHandler<AddGeolocationCommand, Result<string>>
     {
         private readonly IGeolocationRepository _repository;
         private readonly IGeolocationService _geolocationService;
@@ -23,18 +23,18 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
             _mapper = mapper;
         }
 
-        public async Task<Result<GeolocationDto>> Handle(AddGeolocationCommand request, CancellationToken cancellationToken)
+        public async Task<Result<string>> Handle(AddGeolocationCommand request, CancellationToken cancellationToken)
         {
             var apiRequestResult = await _geolocationService.GetAsync(request.Url, cancellationToken);
 
-            return await apiRequestResult.Match<Task<Result<GeolocationDto>>>(async result =>
+            return await apiRequestResult.Match<Task<Result<string>>>(async result =>
             {
                 var newLocation = _mapper.Map<Geolocation>(result);
                 var entity = await _repository.AddAsync(newLocation);
                 var dto = _mapper.Map<GeolocationDto>(entity);
-                return new Result<GeolocationDto>(dto);
+                return new Result<string>(dto.Ip);
             },
-            error => Task.FromResult(new Result<GeolocationDto>(error)));
+            error => Task.FromResult(new Result<string>(error)));
         }
     }
 }

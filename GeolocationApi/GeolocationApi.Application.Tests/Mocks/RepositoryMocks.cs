@@ -30,17 +30,6 @@ namespace GeolocationApi.Application.Tests.Mock
                     return location;
                 });
 
-            mock.Setup(repo => repo.UpdateAsync(It.IsAny<Geolocation>()))
-                .ReturnsAsync((Geolocation location) =>
-                {
-                    var index = locations.FindIndex(g => g.Ip == location.Ip);
-                    if (index == -1)
-                        return null;
-
-                    locations[index] = location;
-                    return location;
-                });
-
             return mock;
         }
 

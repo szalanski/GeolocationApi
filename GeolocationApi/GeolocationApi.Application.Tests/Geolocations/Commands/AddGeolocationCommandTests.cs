@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ColocationApi.Domain.Entities;
 using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Contracts.Persistence;
 using GeolocationApi.Application.Dtos;
@@ -69,7 +70,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
                 Content = new StringContent(TestJson, Encoding.UTF8, "application/json")
             };
 
-            var expectedResult = new GeolocationDto
+            var expectedItem = new GeolocationDto
             {
                 Ip = ipAddress,
                 Type = "ipv4",
@@ -98,9 +99,11 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             //Assert
             Assert.IsTrue(response.IsSuccess);
             var finalCount = repository.GetAllAsync().GetAwaiter().GetResult().Count;
+            var addedItem = await repository.GetByIpAsync(ipAddress);
 
+            Assert.AreEqual(expectedItem, _mapper.Map<GeolocationDto>(addedItem));
             Assert.AreEqual(initialCount + 1, finalCount);
-            response.IfSucc(response => Assert.AreEqual(expectedResult, response));
+            response.IfSucc(response => Assert.AreEqual(ipAddress, response));
             response.IfFail(error => Assert.Fail());
         }
 

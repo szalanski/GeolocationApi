@@ -11,9 +11,6 @@ namespace GeolocationApi.Application.Contracts.Persistence
         Task<IReadOnlyList<Geolocation>> GetAllAsync();
 
         Task<Geolocation> AddAsync(Geolocation entity);
-
-        Task<Geolocation> UpdateAsync(Geolocation entity);
-
         Task<Geolocation> DeleteAsync(Geolocation entity);
     }
 }
