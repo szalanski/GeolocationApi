@@ -14,21 +14,21 @@ namespace GeolocationApi.Application.Tests.Mock
             mock.Setup(reopo => reopo.GetAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(locations);
 
             mock.Setup(repo => repo.GetByIpAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).
-                ReturnsAsync((string ip) => locations.FirstOrDefault(g => g.Ip == ip));
+                ReturnsAsync((string ip, CancellationToken ct) => locations.FirstOrDefault(g => g.Ip == ip));
 
 
             mock.Setup(repo => repo.GetByUrlAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).
-                ReturnsAsync((string url) => locations.FirstOrDefault(g => g.Url == url));
+                ReturnsAsync((string url, CancellationToken ct) => locations.FirstOrDefault(g => g.Url == url));
 
             mock.Setup(repo => repo.AddAsync(It.IsAny<Geolocation>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Geolocation location) =>
+                .ReturnsAsync((Geolocation location, CancellationToken ct) =>
                 {
                     locations.Add(location);
                     return location;
                 });
 
             mock.Setup(repo => repo.DeleteAsync(It.IsAny<Geolocation>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Geolocation location) =>
+                .ReturnsAsync((Geolocation location, CancellationToken ct) =>
                 {
                     locations.Remove(location);
                     return location;

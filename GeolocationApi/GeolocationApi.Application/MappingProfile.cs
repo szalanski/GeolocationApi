@@ -10,6 +10,7 @@ namespace GeolocationApi.Application
         public MappingProfile()
         {
             CreateMap<Geolocation, GeolocationDto>().ReverseMap();
+            CreateMap<IEnumerable<Geolocation>, IEnumerable<GeolocationDto>>().ReverseMap();
             CreateMap<GeolocationModel, Geolocation>()
                 .ForMember(dest => dest.ContinentCode, opt => opt.MapFrom(src => src.continent_code))
                 .ForMember(dest => dest.ContinentName, opt => opt.MapFrom(src => src.continent_name))

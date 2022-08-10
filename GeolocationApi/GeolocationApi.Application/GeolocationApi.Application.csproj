@@ -21,8 +21,4 @@
     <ProjectReference Include="..\ColocationApi.Domain\ColocationApi.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\Geolocations\Queries\" />
-  </ItemGroup>
-
 </Project>

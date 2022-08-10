@@ -2,11 +2,6 @@
 using GeolocationApi.Application.Contracts.Persistence;
 using GeolocationApi.Application.Tests.Mock;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeolocationApi.Application.Tests.Geolocations.Commands
 {
