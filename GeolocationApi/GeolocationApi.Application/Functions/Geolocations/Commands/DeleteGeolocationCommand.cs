@@ -10,8 +10,8 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
 {
     public record struct DeleteGeolocationCommand : IRequest<Result<string>>
     {
-        public string Url { get; set; }
-        public string Ip { get; set; }
+        public string Url { get; init; }
+        public string Ip { get; init; }
     }
 
     public class DeleteGeolocationCommandHandler : IRequestHandler<DeleteGeolocationCommand, Result<string>>

@@ -11,8 +11,8 @@ namespace GeolocationApi.Application.Functions.Geolocations.Queries
 {
     public struct GetGeolocationQuery : IRequest<Result<GeolocationDto>>
     {
-        public string Ip { get; set; }
-        public string Url { get; set; }
+        public string Ip { get; init; }
+        public string Url { get; init; }
     }
 
     public class GetGeolocationQueryHandler : IRequestHandler<GetGeolocationQuery, Result<GeolocationDto>>
