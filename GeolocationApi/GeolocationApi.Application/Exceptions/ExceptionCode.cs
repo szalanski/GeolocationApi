@@ -5,5 +5,6 @@
         NotFound,
         BadRequest,
         InternalError,
+        AlreadyExists,
     }
 }

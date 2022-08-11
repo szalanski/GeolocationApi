@@ -5,6 +5,7 @@ using GeolocationApi.Application.Dtos;
 using GeolocationApi.Application.Exceptions;
 using LanguageExt.Common;
 using MediatR;
+using System.Linq;
 using System.Net;
 
 namespace GeolocationApi.Application.Functions.Geolocations.Queries
@@ -26,8 +27,8 @@ namespace GeolocationApi.Application.Functions.Geolocations.Queries
         public async Task<Result<IEnumerable<GeolocationDto>>> Handle(GetAllGeolocationsQuery request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetAllAsync(cancellationToken);
-            if (entity == null)
-                return new Result<IEnumerable<GeolocationDto>>(new NotFoundException("Resources with provided IP address or Url cannot be found"));
+            if (!entity.Any())
+                return new Result<IEnumerable<GeolocationDto>>(new NotFoundException("No data has been found"));
 
             return new Result<IEnumerable<GeolocationDto>>(_mapper.Map<IEnumerable<Geolocation>, IEnumerable<GeolocationDto>>(entity));
         }

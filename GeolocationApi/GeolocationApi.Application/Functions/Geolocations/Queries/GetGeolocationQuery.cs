@@ -9,11 +9,7 @@ using System.Net;
 
 namespace GeolocationApi.Application.Functions.Geolocations.Queries
 {
-    public struct GetGeolocationQuery : IRequest<Result<GeolocationDto>>
-    {
-        public string Ip { get; init; }
-        public string Url { get; init; }
-    }
+    public record struct GetGeolocationQuery(string Input, bool isIpAddress) : IRequest<Result<GeolocationDto>>;
 
     public class GetGeolocationQueryHandler : IRequestHandler<GetGeolocationQuery, Result<GeolocationDto>>
     {
@@ -38,13 +34,12 @@ namespace GeolocationApi.Application.Functions.Geolocations.Queries
 
         private async Task<Geolocation> GetEntity(GetGeolocationQuery command, CancellationToken cancellationToken)
         {
-            if (!string.IsNullOrWhiteSpace(command.Ip))
-                return await _repository.GetByIpAsync(command.Ip, cancellationToken);
+            if (command.isIpAddress)
+            {
+                return await _repository.GetByIpAsync(command.Input, cancellationToken);
+            }
 
-            if (!string.IsNullOrWhiteSpace(command.Url))
-                return await _repository.GetByUrlAsync(command.Url, cancellationToken);
-
-            return null;
+            return await _repository.GetByUrlAsync(command.Input, cancellationToken);
         }
     }
 }
