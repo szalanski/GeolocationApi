@@ -24,10 +24,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Queries
             var expectedResponse = _mapper.Map<GeolocationDto>(item);
 
             //Act
-            var command = new GetGeolocationQuery
-            {
-                Ip = ipAddress
-            };
+            var command = new GetGeolocationQuery(ipAddress, true);
 
             var response = await handler.Handle(command, CancellationToken.None);
 
@@ -50,10 +47,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Queries
             var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
 
             //Act
-            var command = new GetGeolocationQuery
-            {
-                Ip = ip
-            };
+            var command = new GetGeolocationQuery(ip, true);
 
             var response = await handler.Handle(command, CancellationToken.None);
 

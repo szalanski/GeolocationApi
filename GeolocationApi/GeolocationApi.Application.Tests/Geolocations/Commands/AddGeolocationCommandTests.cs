@@ -48,7 +48,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var handler = new AddGeolocationCommandHandler(repository, geolocationService, _mapper);
 
             //Act
-            var command = new AddGeolocationCommand(ipAddress);
+            var command = new AddGeolocationCommand(ipAddress, true);
             var response = await handler.Handle(command, CancellationToken.None);
 
             //Assert
@@ -81,7 +81,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var handler = new AddGeolocationCommandHandler(repository, geolocationService, _mapper);
 
             //Act
-            var command = new AddGeolocationCommand(ipAddress);
+            var command = new AddGeolocationCommand(ipAddress, true);
             var response = await handler.Handle(command, CancellationToken.None);
 
             //Assert

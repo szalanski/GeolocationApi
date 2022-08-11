@@ -20,10 +20,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
 
             //Act
-            var command = new DeleteGeolocationCommand
-            {
-                Ip = ipAddress
-            };
+            var command = new DeleteGeolocationCommand(ipAddress);
 
             var response = await handler.Handle(command, CancellationToken.None);
 
@@ -35,69 +32,6 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             response.IfSucc(response => Assert.AreEqual(ipAddress, response));
             response.IfFail(error => Assert.Fail());
         }
-
-
-        [TestMethod]
-        public async Task Handle_ShouldDeleteItemFromRepository_WhenValidUrlIsGiven()
-        {
-            //Arrange
-            var url = "www.google.com";
-            var ipAddess = "8.8.8.8";
-
-            var repository = _repository.Object;
-            var handler = new DeleteGeolocationCommandHandler(_mapper, repository);
-
-            var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
-
-            //Act
-            var command = new DeleteGeolocationCommand
-            {
-                Url = url
-            };
-
-            var response = await handler.Handle(command, CancellationToken.None);
-
-            //Assert
-            Assert.IsTrue(response.IsSuccess);
-            var finalCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
-
-            Assert.AreEqual(initialCount - 1, finalCount);
-            response.IfSucc(response => Assert.AreEqual(ipAddess, response));
-            response.IfFail(error => Assert.Fail());
-        }
-
-        [TestMethod]
-        public async Task Handle_ShouldReturnNotFound_WhenInvalidUrlIsGiven()
-        {
-            //Arrange
-            var url = "www.wp.pl";
-
-            var repository = _repository.Object;
-            var handler = new DeleteGeolocationCommandHandler(_mapper, repository);
-
-            var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
-
-            //Act
-            var command = new DeleteGeolocationCommand
-            {
-                Url = url
-            };
-
-            var response = await handler.Handle(command, CancellationToken.None);
-
-            //Assert
-            Assert.IsTrue(response.IsFaulted);
-            var finalCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
-
-            Assert.AreEqual(initialCount, finalCount);
-            response.IfSucc(response => Assert.Fail());
-            response.IfFail(error =>
-            {
-                Assert.IsInstanceOfType(error, typeof(NotFoundException));
-                Assert.AreEqual("Resource with provided IP address or Url cannot be found", error.Message);
-            });
-        }
-
 
         [TestMethod]
         public async Task Handle_ShouldReturnNotFound_WhenInvalidIpIsGiven()
@@ -111,10 +45,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var initialCount = repository.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult().Count;
 
             //Act
-            var command = new DeleteGeolocationCommand
-            {
-                Ip = ip
-            };
+            var command = new DeleteGeolocationCommand(ip);
 
             var response = await handler.Handle(command, CancellationToken.None);
 
