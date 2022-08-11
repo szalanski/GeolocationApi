@@ -1,5 +1,4 @@
 ﻿using GeolocationApi.Application.Models.GeolocationData;
-using GeolocationApi.Application.Responses;
 using LanguageExt.Common;
 
 namespace GeolocationApi.Application.Contracts

@@ -1,4 +1,5 @@
 ﻿using GeolocationApi.Application.Contracts;
+using GeolocationApi.Application.Exceptions;
 using GeolocationApi.Application.Models.GeolocationData;
 using GeolocationApi.Application.Services;
 using GeolocationApi.Application.Tests.Mock;
@@ -95,7 +96,7 @@ namespace GeolocationApi.Application.Tests.Services
         }
 
         [TestMethod]
-        public async Task GetAsync_ShouldReturnBadRequestAndSucceesFalse_WhenApiReturnsBadRequest()
+        public async Task GetAsync_ShouldReturnInternalErrorAndSucceesFalse_WhenApiReturnsBadRequest()
         {
             //Arrange
             var ipAddress = "8.8.8.8";
@@ -113,8 +114,7 @@ namespace GeolocationApi.Application.Tests.Services
             Assert.IsTrue(response.IsFaulted);
             response.IfFail(exception =>
             {
-                Assert.IsInstanceOfType(exception, typeof(HttpRequestException));
-                Assert.IsTrue(((HttpRequestException)exception).StatusCode == HttpStatusCode.BadRequest);
+                Assert.IsInstanceOfType(exception, typeof(InternalErrorException));
             });
         }
 
@@ -151,8 +151,7 @@ namespace GeolocationApi.Application.Tests.Services
             Assert.IsTrue(response.IsFaulted);
             response.IfFail(exception =>
             {
-                Assert.IsInstanceOfType(exception, typeof(HttpRequestException));
-                Assert.IsTrue(((HttpRequestException)exception).StatusCode == HttpStatusCode.BadRequest);
+                Assert.IsInstanceOfType(exception, typeof(BadRequestException));
             });
         }
 

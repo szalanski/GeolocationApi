@@ -1,9 +1,8 @@
 ﻿using GeolocationApi.Application.Contracts;
+using GeolocationApi.Application.Exceptions;
 using GeolocationApi.Application.Models.GeolocationData;
-using GeolocationApi.Application.Responses;
 using LanguageExt.Common;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 
 namespace GeolocationApi.Application.Services
 {
@@ -39,16 +38,15 @@ namespace GeolocationApi.Application.Services
                 return new Result<GeolocationModel>(content);
             }
 
-            var exception = new HttpRequestException(response.ReasonPhrase, null, response.StatusCode);
-            return new Result<GeolocationModel>(exception);
+            return new Result<GeolocationModel>(new InternalErrorException(response.ReasonPhrase));
         }
 
         private Exception HandleErrorResponse(ErrorResponse response)
         {
             if (response.Error.Code == InvalidIpErrorCode)
-                return new HttpRequestException(response.Error.Info, null, System.Net.HttpStatusCode.BadRequest);
+                return new BadRequestException(response.Error.Info);
 
-            return new HttpRequestException(response.Error.Info, null, System.Net.HttpStatusCode.InternalServerError);
+            return new InternalErrorException(response.Error.Info);
         }
 
         public void Dispose()
