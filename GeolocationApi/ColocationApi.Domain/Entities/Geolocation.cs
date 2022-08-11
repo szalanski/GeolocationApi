@@ -3,7 +3,7 @@
     public class Geolocation
     {
         public string Ip { get; set; }
-        public string Url { get; set; }
+        public string? Url { get; set; }
         public string Type { get; set; }
         public string ContinentCode { get; set; }
         public string ContinentName { get; set; }

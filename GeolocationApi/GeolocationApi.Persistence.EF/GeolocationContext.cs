@@ -18,7 +18,8 @@ namespace GeolocationApi.Persistence.EF
                 .HasName("PrimaryKey_GeolocationId");
 
             modelBuilder.Entity<Geolocation>()
-                .HasIndex(e => e.Url);
+                .HasIndex(e => e.Url)
+                .IsUnique();
         }
     }
 }
