@@ -2,6 +2,7 @@
 using ColocationApi.Domain.Entities;
 using GeolocationApi.Application.Contracts.Persistence;
 using GeolocationApi.Application.Dtos;
+using GeolocationApi.Application.Exceptions;
 using LanguageExt.Common;
 using MediatR;
 using System.Net;
@@ -30,7 +31,7 @@ namespace GeolocationApi.Application.Functions.Geolocations.Queries
         {
             var entity = await GetEntity(request, cancellationToken);
             if (entity == null)
-                return new Result<GeolocationDto>(new HttpRequestException("Resource with provided IP address or Url cannot be found", null, HttpStatusCode.NotFound));
+                return new Result<GeolocationDto>(new NotFoundException("Resource with provided IP address or Url cannot be found"));
 
             return new Result<GeolocationDto>(_mapper.Map<GeolocationDto>(entity));
         }
@@ -39,7 +40,6 @@ namespace GeolocationApi.Application.Functions.Geolocations.Queries
         {
             if (!string.IsNullOrWhiteSpace(command.Ip))
                 return await _repository.GetByIpAsync(command.Ip, cancellationToken);
-
 
             if (!string.IsNullOrWhiteSpace(command.Url))
                 return await _repository.GetByUrlAsync(command.Url, cancellationToken);

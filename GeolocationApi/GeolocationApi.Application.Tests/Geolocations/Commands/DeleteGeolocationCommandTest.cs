@@ -1,4 +1,5 @@
-﻿using GeolocationApi.Application.Functions.Geolocations.Commands;
+﻿using GeolocationApi.Application.Exceptions;
+using GeolocationApi.Application.Functions.Geolocations.Commands;
 using System.Net;
 
 namespace GeolocationApi.Application.Tests.Geolocations.Commands
@@ -92,10 +93,8 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             response.IfSucc(response => Assert.Fail());
             response.IfFail(error =>
             {
-                Assert.IsInstanceOfType(error, typeof(HttpRequestException));
-                var httpException = (HttpRequestException)error;
-                Assert.AreEqual("Resource with provided IP address or Url cannot be found", httpException.Message);
-                Assert.AreEqual(HttpStatusCode.NotFound, httpException.StatusCode);
+                Assert.IsInstanceOfType(error, typeof(NotFoundException));
+                Assert.AreEqual("Resource with provided IP address or Url cannot be found", error.Message);
             });
         }
 
@@ -127,10 +126,8 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             response.IfSucc(response => Assert.Fail());
             response.IfFail(error =>
             {
-                Assert.IsInstanceOfType(error, typeof(HttpRequestException));
-                var httpException = (HttpRequestException)error;
-                Assert.AreEqual("Resource with provided IP address or Url cannot be found", httpException.Message);
-                Assert.AreEqual(HttpStatusCode.NotFound, httpException.StatusCode);
+                Assert.IsInstanceOfType(error, typeof(NotFoundException));
+                Assert.AreEqual("Resource with provided IP address or Url cannot be found", error.Message);
             });
         }
     }

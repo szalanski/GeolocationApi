@@ -1,5 +1,6 @@
 ﻿using GeolocationApi.Application.Contracts;
 using GeolocationApi.Application.Dtos;
+using GeolocationApi.Application.Exceptions;
 using GeolocationApi.Application.Functions.Geolocations.Commands;
 using GeolocationApi.Application.Services;
 using GeolocationApi.Application.Tests.Mock;
@@ -63,7 +64,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
 
 
         [TestMethod]
-        public async Task Handle_ShouldHttpRequestException_WhenStringEmptyIpAdressIsGiven()
+        public async Task Handle_ShouldReturnInternalEerror_WhenApiResponseWithBadRequest()
         {
             //Arrange
             var ipAddress = "";
@@ -91,8 +92,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             response.IfSucc(response => Assert.Fail());
             response.IfFail(error =>
             {
-                Assert.IsInstanceOfType(error, typeof(HttpRequestException));
-                Assert.IsTrue(((HttpRequestException)error).StatusCode == HttpStatusCode.BadRequest);
+                Assert.IsInstanceOfType(error, typeof(InternalErrorException));
             });
         }
 
