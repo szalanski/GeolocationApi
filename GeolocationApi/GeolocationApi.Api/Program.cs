@@ -1,3 +1,4 @@
+using GeolocationApi.Api.MIddlewares;
 using GeolocationApi.Application;
 using GeolocationApi.Persistence.EF;
 
@@ -14,6 +15,8 @@ builder.Services.AddGeolocationEF(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
