@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColocationApi.Domain", "Col
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationApi.Persistence.EF", "GeolocationApi.Persistence.EF\GeolocationApi.Persistence.EF.csproj", "{FABDC299-82FA-4529-B743-8ED10B2B114A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeolocationApi.Api", "GeolocationApi.Api\GeolocationApi.Api.csproj", "{9B83C2E9-8E93-4F30-8B63-85E4854DE390}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{FABDC299-82FA-4529-B743-8ED10B2B114A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FABDC299-82FA-4529-B743-8ED10B2B114A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FABDC299-82FA-4529-B743-8ED10B2B114A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B83C2E9-8E93-4F30-8B63-85E4854DE390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B83C2E9-8E93-4F30-8B63-85E4854DE390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B83C2E9-8E93-4F30-8B63-85E4854DE390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B83C2E9-8E93-4F30-8B63-85E4854DE390}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{802DAABF-5F89-4DCA-B25B-D32BB0CC8620} = {020D0633-0AAB-4C0F-9127-4A86D734C0C1}
 		{D320BEF0-96DF-428A-9F87-D98F7825F5AC} = {8F5CCE15-D3BD-4E32-9923-CCEB70FCD257}
 		{FABDC299-82FA-4529-B743-8ED10B2B114A} = {8F5CCE15-D3BD-4E32-9923-CCEB70FCD257}
+		{9B83C2E9-8E93-4F30-8B63-85E4854DE390} = {8F5CCE15-D3BD-4E32-9923-CCEB70FCD257}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {220DC874-5ACB-4B14-BC73-75471B2A147D}
