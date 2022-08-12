@@ -11,8 +11,6 @@ namespace GeolocationApi.Application.Functions.Geolocations.Commands
 {
     public record struct AddGeolocationCommand(string Input, bool IsIpAddress) : IRequest<Result<string>>;
 
-
-
     public class AddGeolocationCommandHandler : IRequestHandler<AddGeolocationCommand, Result<string>>
     {
         private readonly IGeolocationRepository _repository;

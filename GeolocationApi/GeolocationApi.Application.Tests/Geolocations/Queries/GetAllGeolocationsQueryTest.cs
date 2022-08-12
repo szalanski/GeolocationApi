@@ -8,7 +8,7 @@ namespace GeolocationApi.Application.Tests.Geolocations.Queries
     public class GetAllGeolocationsQueryTest : CommandQueryTestBase
     {
         [TestMethod]
-        public async Task Handle_ShouldReadAllItemsFromRepository_WhenValidIpAdressIsGiven()
+        public async Task Handle_ShouldReadAllItemsFromRepository()
         {
             //Arrange
             var repository = _repository.Object;

@@ -48,7 +48,5 @@ namespace GeolocationApi.Application.Tests.Geolocations.Commands
             var cfgProvider = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             _mapper = cfgProvider.CreateMapper();
         }
-
-       
     }
 }

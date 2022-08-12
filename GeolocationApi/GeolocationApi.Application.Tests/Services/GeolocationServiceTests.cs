@@ -5,7 +5,6 @@ using GeolocationApi.Application.Services;
 using GeolocationApi.Application.Tests.Mock;
 using Newtonsoft.Json;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace GeolocationApi.Application.Tests.Services
@@ -13,8 +12,6 @@ namespace GeolocationApi.Application.Tests.Services
     [TestClass]
     public class GeolocationServiceTests
     {
-
-
         private const string ApiKey = "";
         private const string TestJson = @"{
                                             ""ip"": ""8.8.8.8"",

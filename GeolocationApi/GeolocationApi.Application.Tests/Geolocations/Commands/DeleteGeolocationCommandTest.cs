@@ -1,6 +1,5 @@
 ﻿using GeolocationApi.Application.Exceptions;
 using GeolocationApi.Application.Functions.Geolocations.Commands;
-using System.Net;
 
 namespace GeolocationApi.Application.Tests.Geolocations.Commands
 {
