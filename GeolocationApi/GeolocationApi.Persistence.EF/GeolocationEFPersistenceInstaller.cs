@@ -10,7 +10,7 @@ namespace GeolocationApi.Persistence.EF
     {
         public static IServiceCollection AddGeolocationEF(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<GeolocationContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<GeolocationContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IGeolocationRepository, GeolocationRepository>();
             return services;
         }
